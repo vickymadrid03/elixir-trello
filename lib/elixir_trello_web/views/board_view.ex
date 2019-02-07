@@ -3,7 +3,7 @@ defmodule ElixirTrelloWeb.BoardView do
   alias ElixirTrelloWeb.BoardView
 
   def render("index.json", %{boards: boards}) do
-    %{data: render_many(boards, BoardView, "board.json")}
+    render_many(boards, BoardView, "board.json")
   end
 
   def render("show.json", %{board: board}) do
