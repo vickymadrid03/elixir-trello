@@ -7,11 +7,14 @@ defmodule ElixirTrelloWeb.BoardView do
   end
 
   def render("show.json", %{board: board}) do
-    %{data: render_one(board, BoardView, "board.json")}
+    render_one(board, BoardView, "board_with_lists.json")
   end
 
   def render("board.json", %{board: board}) do
-    %{id: board.id,
-      name: board.name}
+    %{id: board.id, name: board.name}
+  end
+
+  def render("board_with_lists.json", %{board: board}) do
+    %{id: board.id, name: board.name, lists: board.lists}
   end
 end

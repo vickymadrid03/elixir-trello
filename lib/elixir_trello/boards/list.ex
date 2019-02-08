@@ -1,17 +1,18 @@
-defmodule ElixirTrello.Boards.Board do
+defmodule ElixirTrello.Boards.List do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "boards" do
+
+  schema "lists" do
     field :name, :string
-    has_many :lists, ElixirTrello.Boards.List
+    field :board_id, :id
 
     timestamps()
   end
 
   @doc false
-  def changeset(board, attrs) do
-    board
+  def changeset(list, attrs) do
+    list
     |> cast(attrs, [:name])
     |> validate_required([:name])
   end
