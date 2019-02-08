@@ -11,11 +11,16 @@ defmodule ElixirTrelloWeb.CardController do
     render(conn, "index.json", cards: cards)
   end
 
-  def create(conn, %{"card" => card_params}) do
-    with {:ok, %Card{} = card} <- Cards.create_card(card_params) do
+  def create(conn, %{"card" => card_params, "list_id" => list_id, "board_id" => board_id}) do
+    {list_id, _} = Integer.parse(list_id)
+
+    with {:ok, %Card{} = card} <- Cards.create_card(list_id, card_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.card_path(conn, :show, card))
+      |> put_resp_header(
+        "location",
+        Routes.board_list_card_path(conn, :show, board_id, list_id, card)
+      )
       |> render("show.json", card: card)
     end
   end

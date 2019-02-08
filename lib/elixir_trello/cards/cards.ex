@@ -49,8 +49,8 @@ defmodule ElixirTrello.Cards do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_card(attrs \\ %{}) do
-    %Card{}
+  def create_card(list_id, attrs \\ %{}) do
+    %Card{list_id: list_id}
     |> Card.changeset(attrs)
     |> Repo.insert()
   end
