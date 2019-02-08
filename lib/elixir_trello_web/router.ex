@@ -9,7 +9,9 @@ defmodule ElixirTrelloWeb.Router do
     pipe_through :api
 
     resources "/boards", BoardController do
-      resources "/lists", ListController
+      resources "/lists", ListController do
+        resources "/cards", CardController
+      end
     end
   end
 end

@@ -3,15 +3,14 @@ defmodule ElixirTrelloWeb.ListView do
   alias ElixirTrelloWeb.ListView
 
   def render("index.json", %{lists: lists}) do
-    %{data: render_many(lists, ListView, "list.json")}
+    render_many(lists, ListView, "list.json")
   end
 
   def render("show.json", %{list: list}) do
-    %{data: render_one(list, ListView, "list.json")}
+    render_one(list, ListView, "list.json")
   end
 
   def render("list.json", %{list: list}) do
-    %{id: list.id,
-      name: list.name}
+    %{id: list.id, name: list.name, cards: list.cards}
   end
 end

@@ -2,10 +2,10 @@ defmodule ElixirTrello.Boards.List do
   use Ecto.Schema
   import Ecto.Changeset
 
-
   schema "lists" do
     field :name, :string
     field :board_id, :id
+    has_many :cards, ElixirTrello.Cards.Card
 
     timestamps()
   end

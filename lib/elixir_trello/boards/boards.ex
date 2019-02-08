@@ -122,6 +122,7 @@ defmodule ElixirTrello.Boards do
   """
   def list_lists do
     Repo.all(List)
+    |> Repo.preload(:lists)
   end
 
   @doc """
@@ -138,7 +139,10 @@ defmodule ElixirTrello.Boards do
       ** (Ecto.NoResultsError)
 
   """
-  def get_list!(id), do: Repo.get!(List, id)
+  def get_list!(id) do
+    Repo.get!(List, id)
+    |> Repo.preload(:cards)
+  end
 
   @doc """
   Creates a list.
@@ -205,5 +209,9 @@ defmodule ElixirTrello.Boards do
   """
   def change_list(%List{} = list) do
     List.changeset(list, %{})
+  end
+
+  def with_cards(list) do
+    list |> Repo.preload(:cards)
   end
 end

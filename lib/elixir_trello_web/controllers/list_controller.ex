@@ -12,7 +12,9 @@ defmodule ElixirTrelloWeb.ListController do
   end
 
   def create(conn, %{"list" => list_params, "board_id" => board_id}) do
-    with {:ok, %List{} = list} <- Boards.create_list(list_params, board_id) do
+    {:ok, %List{} = created_list} = Boards.create_list(list_params, board_id)
+
+    with list <- Boards.with_cards(created_list) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.board_list_path(conn, :show, board_id, list))
