@@ -157,9 +157,7 @@ defmodule ElixirTrello.Boards do
 
   """
   def create_list(attrs \\ %{}, board_id) do
-    {id, _} = Integer.parse(board_id)
-
-    %List{board_id: id}
+    %List{board_id: board_id}
     |> List.changeset(attrs)
     |> Repo.insert()
   end

@@ -12,6 +12,7 @@ defmodule ElixirTrelloWeb.ListController do
   end
 
   def create(conn, %{"list" => list_params, "board_id" => board_id}) do
+    {board_id, _} = Integer.parse(board_id)
     {:ok, %List{} = created_list} = Boards.create_list(list_params, board_id)
 
     with list <- Boards.with_cards(created_list) do
