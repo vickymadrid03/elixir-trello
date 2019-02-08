@@ -1,6 +1,7 @@
 defmodule ElixirTrelloWeb.BoardView do
   use ElixirTrelloWeb, :view
   alias ElixirTrelloWeb.BoardView
+  alias ElixirTrelloWeb.ListView
 
   def render("index.json", %{boards: boards}) do
     render_many(boards, BoardView, "board.json")
@@ -15,6 +16,6 @@ defmodule ElixirTrelloWeb.BoardView do
   end
 
   def render("board_with_lists.json", %{board: board}) do
-    %{id: board.id, name: board.name, lists: board.lists}
+    %{id: board.id, name: board.name, lists: render_many(board.lists, ListView, "list.json")}
   end
 end
