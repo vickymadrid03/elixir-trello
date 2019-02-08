@@ -2,7 +2,9 @@ defmodule ElixirTrelloWeb.ListController do
   use ElixirTrelloWeb, :controller
 
   alias ElixirTrello.Boards
+  alias ElixirTrello.Boards.Board
   alias ElixirTrello.Boards.List
+  alias ElixirTrello.Repo
 
   action_fallback ElixirTrelloWeb.FallbackController
 
@@ -11,8 +13,9 @@ defmodule ElixirTrelloWeb.ListController do
     render(conn, "index.json", lists: lists)
   end
 
-  def create(conn, %{"list" => list_params}) do
-    with {:ok, %List{} = list} <- Boards.create_list(list_params) do
+  # TODO: validate presence of board_id
+  def create(conn, %{"list" => list_params, "board_id" => board_id}) do
+    with {:ok, %List{} = list} <- Boards.create_list(list_params, board_id) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.list_path(conn, :show, list))

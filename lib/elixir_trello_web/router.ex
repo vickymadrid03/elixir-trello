@@ -8,6 +8,8 @@ defmodule ElixirTrelloWeb.Router do
   scope "/api", ElixirTrelloWeb do
     pipe_through :api
 
-    resources "/boards", BoardController
+    resources "/boards", BoardController do
+      resources "/lists", ListController
+    end
   end
 end

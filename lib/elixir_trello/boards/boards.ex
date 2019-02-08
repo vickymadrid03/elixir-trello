@@ -105,6 +105,10 @@ defmodule ElixirTrello.Boards do
     Board.changeset(board, %{})
   end
 
+  def with_lists(board) do
+    board |> Repo.preload(:lists)
+  end
+
   alias ElixirTrello.Boards.List
 
   @doc """
@@ -148,8 +152,10 @@ defmodule ElixirTrello.Boards do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_list(attrs \\ %{}) do
-    %List{}
+  def create_list(attrs \\ %{}, board_id) do
+    {id, _} = Integer.parse(board_id)
+
+    %List{board_id: id}
     |> List.changeset(attrs)
     |> Repo.insert()
   end

@@ -15,5 +15,6 @@ defmodule ElixirTrello.Boards.List do
     list
     |> cast(attrs, [:name])
     |> validate_required([:name])
+    |> foreign_key_constraint(:board_id)
   end
 end
