@@ -11,12 +11,11 @@ defmodule ElixirTrelloWeb.ListController do
     render(conn, "index.json", lists: lists)
   end
 
-  # TODO: validate presence of board_id
   def create(conn, %{"list" => list_params, "board_id" => board_id}) do
     with {:ok, %List{} = list} <- Boards.create_list(list_params, board_id) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.list_path(conn, :show, list))
+      |> put_resp_header("location", Routes.board_list_path(conn, :show, board_id, list))
       |> render("show.json", list: list)
     end
   end
