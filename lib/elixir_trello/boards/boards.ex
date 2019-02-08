@@ -36,8 +36,12 @@ defmodule ElixirTrello.Boards do
 
   """
   def get_board!(id) do
-    Repo.get!(Board, id)
-    |> Repo.preload(:lists)
+    Board
+    |> where([board], board.id == ^id)
+    |> join(:left, [board], lists in assoc(board, :lists))
+    |> join(:left, [board, lists], cards in assoc(lists, :cards))
+    |> preload([board, lists, cards], lists: {lists, cards: cards})
+    |> Repo.one()
   end
 
   @doc """
@@ -122,7 +126,7 @@ defmodule ElixirTrello.Boards do
   """
   def list_lists do
     Repo.all(List)
-    |> Repo.preload(:lists)
+    |> Repo.preload(:cards)
   end
 
   @doc """
