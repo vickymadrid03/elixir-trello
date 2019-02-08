@@ -2,9 +2,7 @@ defmodule ElixirTrelloWeb.ListController do
   use ElixirTrelloWeb, :controller
 
   alias ElixirTrello.Boards
-  alias ElixirTrello.Boards.Board
   alias ElixirTrello.Boards.List
-  alias ElixirTrello.Repo
 
   action_fallback ElixirTrelloWeb.FallbackController
 
